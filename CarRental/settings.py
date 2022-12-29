@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authy',
     'core',
+    'qr_code',
 
     "rest_framework",
     "rest_framework.authtoken",

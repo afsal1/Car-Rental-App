@@ -67,3 +67,5 @@ class AvailableCarsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarDetails
         fields = "__all__"
+
+

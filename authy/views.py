@@ -175,6 +175,32 @@ class AvailableCarsView(APIView, HttpResponseMixin):
             )
 
 
+class QRCodeView(APIView, HttpResponseMixin):
+    """
+    Class Name: QRCodeView
+    description: to view the qr code of the car
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        Function Name : get
+        Description: to view the qr code of the car
+        params: car_id
+        return: car details
+        """
+        try:
+            car = CarDetails.objects.get(id=kwargs.get("car_id"))
+            serializer = serializers.QRCodeSerializer(car)
+            return self.success_response(
+                code="HTTP_200_OK",
+                message="car detail view", data=serializer.data
+            )
+        except Exception as e:
+            return self.error_response(
+                code="HTTP_400_BAD_REQUEST",
+                message=f"Something went wrong, Exact Problem: {e}",
+            )
+
+
 class SingleCarView(APIView, HttpResponseMixin):
     """
     Class Name: SingleCarView

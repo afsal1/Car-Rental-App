@@ -1,6 +1,10 @@
 from django.db import models
 from authy.models import CustomUser
 import uuid
+from qrcode import *
+import io
+from PIL import Image
+
 
 
 
@@ -23,9 +27,21 @@ class CarDetails(models.Model):
     day_price = models.IntegerField(default=0)
     is_available = models.BooleanField(default=True)
     car_image = models.ImageField(upload_to="car_image/", blank=False, null=False)
+    qr_code = models.ImageField(upload_to="qr_code/", blank=False, null=False)
     vehicle_station = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        qrcode_img = make(self.car_name)
+        canvas = Image.new('RGB', (290, 290), 'white')
+        canvas.paste(qrcode_img)
+        fname = f'qr_code-{self.car_name}.png'
+        buffer = io.BytesIO()
+        canvas.save(buffer,'PNG')
+        self.qr_code.save(fname, buffer, save=False)
+        canvas.close()
+        super().save(*args, **kwargs)
 
 
     def __str__(self):

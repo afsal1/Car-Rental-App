@@ -3,6 +3,7 @@ from utilities.mixins import HttpResponseMixin
 from .serializers import LocationSerializer, AvailableCarsSerializer,\
     AdminLoginSerializer
 from . models import Location, CarDetails
+from qrcode import *
 
 
 class AdminLoginView(APIView, HttpResponseMixin):
@@ -113,7 +114,6 @@ class LocationAddView(APIView, HttpResponseMixin):
                 message=f"Something went wrong, Exact Problem: {e}",
             )
 
-
 class CarAddView(APIView, HttpResponseMixin):
     """
     Class Name: CarAddView
@@ -126,7 +126,7 @@ class CarAddView(APIView, HttpResponseMixin):
         Function Name : post
         Description: to add cars
         params: car_name, day_price, car_image
-                vehicle_station
+                vehicle_station, qrcode
         return: success response
         """
 
@@ -143,7 +143,8 @@ class CarAddView(APIView, HttpResponseMixin):
                 car_name=car_name,
                 day_price=day_price,
                 car_image=car_image,
-                vehicle_station=vehicle_station
+                vehicle_station=vehicle_station,
+                qr_code=""
             )
 
             return self.success_response(

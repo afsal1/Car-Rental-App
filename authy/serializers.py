@@ -119,3 +119,9 @@ class RentedCarsSerializer(serializers.ModelSerializer):
     class Meta:
         model = RentCar
         fields = "__all__"
+
+
+class QRCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarDetails
+        fields = ["qr_code"]

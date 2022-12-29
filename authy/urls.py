@@ -29,6 +29,11 @@ urlpatterns = [
         name="single_car_view",
     ),
     path(
+        "qr_code_view/<str:car_id>/",
+        views.QRCodeView.as_view(),
+        name="qr_code_view",
+    ),
+    path(
         "rent_a_car/<str:car_id>/",
         views.RentACarView.as_view(),
         name="rent_a_car",
